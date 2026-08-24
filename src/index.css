@@ -725,6 +725,53 @@ body {
   color: var(--text-muted);
 }
 
+/* ── Test mode banner ── */
+
+.test-banner {
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.15rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.test-banner__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fca5a5;
+  margin-bottom: 0.5rem;
+}
+
+.test-banner__text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.test-banner__steps {
+  margin: 0 0 0.6rem 1.1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.test-banner__steps code {
+  background: rgba(0, 229, 195, 0.12);
+  color: var(--accent);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.test-banner__note {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
 /* ── Responsive tweaks ── */
 
 @media (max-width: 480px) {

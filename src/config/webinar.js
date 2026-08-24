@@ -1,7 +1,7 @@
 export const WEBINAR = {
   date: import.meta.env.VITE_WEBINAR_DATE || '[DATE]',
   time: import.meta.env.VITE_WEBINAR_TIME || '[TIME]',
-  price: import.meta.env.VITE_COURSE_PRICE || '499',
+  price: import.meta.env.VITE_COURSE_PRICE || '10',
   name: import.meta.env.VITE_COURSE_NAME || 'Crypto Education Webinar',
 }
 
@@ -32,7 +32,7 @@ export const WHO_ITEMS = [
 
 export const TIMELINE = [
   { step: 1, label: 'Register' },
-  { step: 2, label: 'Pay ₹499' },
+  { step: 2, label: `Pay ₹${WEBINAR.price}` },
   { step: 3, label: 'Get Confirmation' },
   { step: 4, label: 'Join WhatsApp Community' },
   { step: 5, label: 'Attend Live Webinar' },

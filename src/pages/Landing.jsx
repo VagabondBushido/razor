@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import CtaButton from '../components/CtaButton'
 import FaqAccordion from '../components/FaqAccordion'
+import TestPaymentBanner from '../components/TestPaymentBanner'
 import {
   WEBINAR,
   LEARN_ITEMS,
@@ -55,6 +56,7 @@ export default function Landing() {
           </p>
           <MetaRow />
           <PriceTag size="lg" />
+          <TestPaymentBanner />
           <CtaButton onClick={handlePayment} loading={loading}>
             Register Now →
           </CtaButton>
@@ -199,6 +201,7 @@ export default function Landing() {
             <span>⏱️ 2–3 Hours</span>
           </div>
           <PriceTag size="lg" />
+          <TestPaymentBanner />
           <CtaButton onClick={handlePayment} loading={loading}>
             Secure My Seat — ₹{WEBINAR.price}
           </CtaButton>

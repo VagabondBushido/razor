@@ -30,6 +30,33 @@ function loadRazorpayScript() {
   })
 }
 
+function getCheckoutConfig(testMode) {
+  if (testMode) {
+    // Test mode: QR/intent don't work — only UPI ID (collect) with success@razorpay
+    return {
+      display: {
+        hide: [{ method: 'upi', flows: ['qr', 'intent'] }],
+        blocks: {
+          upi_id: {
+            name: 'Enter UPI ID to pay',
+            instruments: [{ method: 'upi', flows: ['collect'] }],
+          },
+        },
+        sequence: ['block.upi_id'],
+        preferences: { show_default_blocks: false },
+      },
+    }
+  }
+
+  // Live mode: QR + UPI apps work with real payments
+  return {
+    display: {
+      sequence: ['upi'],
+      preferences: { show_default_blocks: true },
+    },
+  }
+}
+
 export function usePayment(onSuccess) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -60,6 +87,7 @@ export function usePayment(onSuccess) {
         name: COURSE_NAME,
         description: 'Webinar registration',
         order_id: data.orderId,
+        config: getCheckoutConfig(data.testMode),
         handler: async function (response) {
           try {
             const verifyRes = await fetch('/api/verify-payment', {

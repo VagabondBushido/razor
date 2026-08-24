@@ -19,8 +19,19 @@ function getRazorpay() {
   return new Razorpay({ key_id: keyId, key_secret: keySecret })
 }
 
+function isTestMode() {
+  return process.env.RAZORPAY_KEY_ID?.startsWith('rzp_test_') ?? false
+}
+
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true })
+})
+
+app.get('/api/config', (_req, res) => {
+  res.json({
+    testMode: isTestMode(),
+    price: Number(process.env.COURSE_AMOUNT || 1000) / 100,
+  })
 })
 
 app.post('/api/create-order', async (_req, res) => {
@@ -32,7 +43,7 @@ app.post('/api/create-order', async (_req, res) => {
       })
     }
 
-    const amount = Number(process.env.COURSE_AMOUNT || 49900)
+    const amount = Number(process.env.COURSE_AMOUNT || 1000)
 
     const order = await razorpay.orders.create({
       amount,
@@ -45,6 +56,7 @@ app.post('/api/create-order', async (_req, res) => {
       amount: order.amount,
       currency: order.currency,
       keyId: process.env.RAZORPAY_KEY_ID,
+      testMode: isTestMode(),
     })
   } catch (err) {
     console.error('Create order error:', err)
