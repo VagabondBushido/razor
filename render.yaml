@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: crypto-webinar
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: COURSE_AMOUNT
+        value: '1000'
+      - key: VITE_WHATSAPP_GROUP_LINK
+        sync: false
+      - key: VITE_COURSE_NAME
+        value: Crypto Education Webinar
+      - key: VITE_COURSE_PRICE
+        value: '10'
+      - key: VITE_WEBINAR_DATE
+        value: '[DATE]'
+      - key: VITE_WEBINAR_TIME
+        value: '[TIME]'

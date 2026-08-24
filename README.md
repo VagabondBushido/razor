@@ -50,8 +50,36 @@ UPI must be **enabled on your Razorpay account**:
 
 Note: UPI-only payment links require **Live Mode**. Test mode supports UPI via the hosted payment page QR/apps if UPI is enabled on your account.
 
-## Production
+## Deploy free on Render
 
-- Switch to **Live Mode** keys in Razorpay
-- Deploy frontend + backend (e.g. Vercel + Railway, or a single VPS)
-- Set environment variables on your host
+The app runs as **one free web service**: Express serves the API and the built React site.
+
+1. Push this repo to GitHub (already done).
+2. Open [Render Dashboard](https://dashboard.render.com) and sign in with GitHub.
+3. Click **New** → **Web Service** → select `VagabondBushido/razor`.
+4. Use:
+   - **Build command:** `npm ci && npm run build`
+   - **Start command:** `npm start`
+   - **Instance:** Free
+5. Add environment variables (same values as your local `.env`):
+
+   | Name | Example |
+   | --- | --- |
+   | `RAZORPAY_KEY_ID` | `rzp_test_...` |
+   | `RAZORPAY_KEY_SECRET` | your secret |
+   | `COURSE_AMOUNT` | `1000` (₹10) |
+   | `VITE_WHATSAPP_GROUP_LINK` | your WhatsApp invite URL |
+   | `VITE_COURSE_NAME` | `Crypto Education Webinar` |
+   | `VITE_COURSE_PRICE` | `10` |
+   | `VITE_WEBINAR_DATE` | session date |
+   | `VITE_WEBINAR_TIME` | session time |
+   | `NODE_ENV` | `production` |
+
+   `VITE_*` values are baked in at **build** time. After changing them, click **Manual Deploy** → **Clear build cache & deploy**.
+
+6. Deploy. Your URL will look like `https://crypto-webinar.onrender.com`.
+
+**Notes**
+- Free Render services sleep after ~15 minutes idle. The first visit after sleep can take 30–60 seconds.
+- Test-mode UPI QR still will not complete. Use `success@razorpay` until you switch to live keys.
+- For real payments, put `rzp_live_...` keys in Render (not in git) and redeploy.

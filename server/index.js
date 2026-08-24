@@ -3,11 +3,16 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
+import path from 'path'
+import { existsSync } from 'fs'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3001
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const distPath = path.join(__dirname, '..', 'dist')
 
 app.use(cors())
 app.use(express.json())
@@ -97,6 +102,14 @@ app.post('/api/verify-payment', (req, res) => {
     res.status(500).json({ error: 'Payment verification failed' })
   }
 })
+
+if (existsSync(distPath)) {
+  app.use(express.static(distPath))
+  app.use((req, res, next) => {
+    if (req.method !== 'GET' || req.path.startsWith('/api')) return next()
+    res.sendFile(path.join(distPath, 'index.html'))
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
